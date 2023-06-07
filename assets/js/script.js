@@ -22,63 +22,66 @@ var questions = [
     { 
         question: "What is the result of the expression '3 + 4 * 2'?",
         answers: [
-            { text: "11", correct: false },
+            { text: "11", iscorrect: false },
             { text: "14", correct: true },
-            { text: "21", correct: false },
-            { text: "10", correct: false }
+            { text: "21", iscorrect: false },
+            { text: "10", iscorrect: false }
         ]
     },
     { 
         question: "Which method is used to remove the last element from an array in JavaScript?",
         answers: [
             { text: "pop()", correct: true },
-            { text: "shift()", correct: false },
-            { text: "splice()", correct: false },
-            { text: "slice()", correct: false }
+            { text: "shift()", iscorrect: false },
+            { text: "splice()", iscorrect: false },
+            { text: "slice()", iscorrect: false }
         ]
     },
     { 
         question: "What is the output of the following code?\n\nconsole.log(2 + '2' - 1);",
         answers: [
-            { text: "3", correct: false },
-            { text: "21", correct: false },
+            { text: "3", iscorrect: false },
+            { text: "21", iscorrect: false },
             { text: "NaN", correct: true },
-            { text: "22", correct: false }
+            { text: "22", iscorrect: false }
         ]
     },
     { 
         question: "Which keyword is used to declare a variable in JavaScript?",
         answers: [
             { text: "var", correct: true },
-            { text: "let", correct: false },
-            { text: "const", correct: false },
-            { text: "int", correct: false }
+            { text: "let", iscorrect: false },
+            { text: "const", iscorrect: false },
+            { text: "int", iscorrect: false }
         ]
     },
     { 
         question: "What does the '===` operator in JavaScript do?",
         answers: [
             { text: "Performs strict equality comparison", correct: true },
-            { text: "Performs type conversion before comparison", correct: false },
-            { text: "Performs loose equality comparison", correct: false },
-            { text: "Performs bitwise comparison", correct: false }
+            { text: "Performs type conversion before comparison", iscorrect: false },
+            { text: "Performs loose equality comparison", iscorrect: false },
+            { text: "Performs bitwise comparison", iscorrect: false }
         ]
     }
 ];
 
-startquiz.addEventListener("click", startquiz1);
-nextquiz.addEventListener("click", () => {
-    currentQuestionIndex++
-    setNextQuestion()
-});
+startquiz.onclick = startquiz1;
+nextquiz.onclick = function() {
+  currentQuestionIndex++;
+  setNextQuestion();
+};
+
+
 
 function timeTick() {
     leftTime--;
-    newTime.textContent = "Time: " + leftTime;
+    newTime.textContent = `Time: ${leftTime}`;
     if (leftTime <= 0) {
-        storeScore();
+      storeScore();
     }
-}
+  }
+  
 
 // function startquiz1
 function startquiz1() {
@@ -99,27 +102,31 @@ function setNextQuestion() {
 
 // view question
 function viewquestion(question) {
-    question1.innerText = question.question
+    question1.textContent = question.question;
+    Answerbtn.innerHTML = "";
+  
     question.answers.forEach(answer => {
-        var button = document.createElement("button")
-        button.innerText = answer.text
-        button.classList.add("btn")
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
-        }
-        button.addEventListener("click", selectAnswer)
-        Answerbtn.appendChild(button)
-    })
-};
+      const button = document.createElement("button");
+      button.textContent = answer.text;
+      button.classList.add("btn");
+      if (answer.correct) {
+        button.dataset.correct = answer.correct;
+      }
+      button.addEventListener("click", selectAnswer);
+      Answerbtn.appendChild(button);
+    });
+  }
+  
 // function to reset
-function reset1() { 
-    nextquiz.classList.add("hide")
-    check.classList.add("hide")
-    while (Answerbtn.firstChild) {
-        Answerbtn.removeChild
-            (Answerbtn.firstChild)
-    }
-};
+function reset1() {
+  nextquiz.classList.add("hide");
+  check.classList.add("hide");
+
+  while (Answerbtn.firstChild) {
+    Answerbtn.firstChild.remove();
+  }
+}
+
 // time decduction logic
 function selectAnswer(e) {
     var selectedButton = e.target;
@@ -136,14 +143,12 @@ function selectAnswer(e) {
         }
     }
     // Check and show the correct answer by set the buttons colors
-function setStatusClass(element, correct) {
-    clearStatusClass(element)
-    if (correct) {
-        element.classList.add("correct");
-    } else {
-        element.classList.add("wrong");
-    }
-};
+    function setStatusClass(element, correct) {
+        clearStatusClass(element);
+        
+        element.classList.add(correct ? "correct" : "wrong");
+      }
+      
 
     Array.from(Answerbtn.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
@@ -230,17 +235,23 @@ function showHighScores(initials) {
 
 viewHighScores.addEventListener("click", showHighScores);
 
- submit.addEventListener("click", function (event) {
-    event.preventDefault()
-    var initials = document.querySelector("#initials-field").value;
-    showHighScores(initials);
-});
+submit.addEventListener("click", handleFormSubmit);
 
-restart.addEventListener("click", function () {
-    window.location.reload();
-});
+restart.addEventListener("click", handleRestartClick);
 
-clear.addEventListener("click", function () {
-    localStorage.clear();
-    document.getElementById("highscore").innerHTML = "";
-});
+clear.addEventListener("click", handleClearClick);
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+  var initials = document.querySelector("#initials-field").value;
+  showHighScores(initials);
+}
+
+function handleRestartClick() {
+  window.location.reload();
+}
+
+function handleClearClick() {
+  localStorage.clear();
+  document.getElementById("highscore").innerHTML = "";
+}

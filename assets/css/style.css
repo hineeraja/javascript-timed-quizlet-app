@@ -6,16 +6,23 @@
   }
   
   body {
-    font-family: Arial;
-    line-height: 3;
-    width: 80%;
-    margin: 0 auto;
-    background-color: aqua;
+    
+      font-family: Arial;
+      line-height: 3;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: rgb(179, 220, 220);
+   
   }
   
   a {
     text-decoration: none;
-  }
+      text-decoration: none;
+      color: blue;
+      font-weight: bold;
+      transition: color 0.3s ease-in-out;
+    }
   
   /* Header */
   header {
@@ -31,14 +38,20 @@
   .scores a {
     color: rgb(2, 2, 29);
     cursor: pointer;
+    
   }
   
   .scores a:hover {
     color: rgb(119, 78, 157);
+    text-decoration: underline;
   }
   
   .start-quiz {
-    text-align: center;
+  text-align: center;
+  padding: 10px;
+  background-color: #cdc5e2;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   h1 {
@@ -46,11 +59,14 @@
   }
   
   h2 {
-    color: rgb(93, 38, 145);
-    border-top: 1px;
-    margin: 20px 0;
-    font-style: italic;
-    text-align: center;
+    color: #5D2691;
+  border-top: 1px solid #5D2691;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+  background-color: #F9F5FF;
   }
   
   .btndiv {
@@ -109,15 +125,15 @@
   /* Highscores */
   .highscore {
     text-align: center;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     
   }
   
   .name-div,
   .score-div {
     border: 5px;
-    flex: 1 35%;
     padding: 10px 0;
     
   }
